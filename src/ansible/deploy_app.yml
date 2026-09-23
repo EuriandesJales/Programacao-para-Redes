@@ -1,0 +1,96 @@
+---
+# deploy_app.yml
+#
+# Playbook de deploy de uma aplicação: puxa a versão mais recente do
+# código, instala dependências, ajusta permissões e reinicia o serviço
+# somente se algo realmente mudou (usando handlers + notify).
+#
+# Esse é um dos usos mais comuns do Ansible no dia a dia: deploy
+# de aplicações que não usam Kubernetes (VMs tradicionais, servidores
+# on-premise, EC2 sem orquestrador).
+#
+# Uso:
+#   ansible-playbook -i inventory/hosts.ini deploy_app.yml \
+#     --limit webservers \
+#     --extra-vars "app_version=v1.4.2"
+
+- name: Deploy da aplicação
+  hosts: webservers
+  become: true
+
+  vars:
+    app_repo: "git@github.com:minha-empresa/minha-api.git"
+    app_dir: "/opt/minha-api"
+    app_version: "main"          # sobrescrito via --extra-vars em produção
+    app_user: "deploy"
+    venv_dir: "{{ app_dir }}/venv"
+
+  tasks:
+    - name: Garantir que o diretório da aplicação existe
+      ansible.builtin.file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: "0755"
+
+    - name: Clonar/atualizar o repositório na versão especificada
+      ansible.builtin.git:
+        repo: "{{ app_repo }}"
+        dest: "{{ app_dir }}"
+        version: "{{ app_version }}"
+        force: true
+      become_user: "{{ app_user }}"
+      notify: reiniciar aplicacao
+      register: git_result
+
+    - name: Criar/atualizar virtualenv com dependências
+      ansible.builtin.pip:
+        requirements: "{{ app_dir }}/requirements.txt"
+        virtualenv: "{{ venv_dir }}"
+        virtualenv_command: python3 -m venv
+      become_user: "{{ app_user }}"
+      notify: reiniciar aplicacao
+
+    - name: Copiar arquivo de variáveis de ambiente
+      ansible.builtin.template:
+        src: templates/app.env.j2
+        dest: "{{ app_dir }}/.env"
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: "0600"
+      notify: reiniciar aplicacao
+
+    - name: Copiar unit file do systemd
+      ansible.builtin.template:
+        src: templates/minha-api.service.j2
+        dest: /etc/systemd/system/minha-api.service
+        mode: "0644"
+      notify:
+        - recarregar systemd
+        - reiniciar aplicacao
+
+    - name: Garantir que o serviço está habilitado e ativo
+      ansible.builtin.systemd:
+        name: minha-api
+        state: started
+        enabled: true
+
+    - name: Registrar a versão implantada (facilita auditoria/rollback)
+      ansible.builtin.copy:
+        content: "{{ app_version }}\n"
+        dest: "{{ app_dir }}/DEPLOYED_VERSION"
+        owner: "{{ app_user }}"
+
+  handlers:
+    - name: recarregar systemd
+      ansible.builtin.systemd:
+        daemon_reload: true
+
+    - name: reiniciar aplicacao
+      ansible.builtin.systemd:
+        name: minha-api
+        state: restarted
+      # Handlers só rodam se alguma task acima realmente mudou algo
+      # (git atualizou, dependências mudaram, .env mudou, etc) —
+      # isso evita reiniciar o serviço sem necessidade.

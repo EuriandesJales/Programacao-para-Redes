@@ -139,3 +139,19 @@ Isso amarra Shell + Python + SSH/Netmiko + Ansible + versionamento — exatament
 - **Cisco Packet Tracer** ou **GNS3/EVE-NG** para simular dispositivos de rede
 - **VS Code** com extensões de Python e YAML
 - **Git/GitHub** para versionar os scripts desde o início (bom hábito DevOps)
+
+
+frameworks do python automatize tarefas chatas
+- **Cap. 11-12 (Arquivos / CLI):** módulos padrão `os`, `shutil`, `send2trash`, `argparse`
+- **Cap. 13 – Web Scraping:** Requests, Beautiful Soup, Selenium e Playwright — os dois primeiros para baixar e interpretar páginas estáticas, e os dois últimos para controlar um navegador de verdade quando o conteúdo depende de JavaScript. [inventwithpython](https://inventwithpython.com/automate3workbook/chapter13.html)
+- **Cap. 14 – Planilhas Excel:** OpenPyXL (a própria página do autor confirma que a cobertura de terceiros foi atualizada para a versão mais recente disponível, incluindo o OpenPyXL) [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
+- **Cap. 15 – Google Sheets:** o pacote de terceiros EZSheets, que abstrai a API oficial do Google Sheets (criado pelo próprio autor do livro) [automatetheboringstuff](https://automatetheboringstuff.com/3e/chapter15.html)
+- **Cap. 16 – SQLite:** o módulo sqlite3 do Python, com uma introdução completa a bancos de dados relacionais [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
+- **Cap. 17 – PDF e Word:** operações de PDF atualizadas usando PyPDF e PDFMiner, além de `python-docx` para arquivos do Word [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
+- **Cap. 18 – CSV/JSON/XML:** módulos padrão `csv`, `json` e `xml`
+- **Cap. 19 – Tempo e agendamento:** módulos padrão `time`, `datetime`, `sched`
+- **Cap. 20 – Email e notificações:** `smtplib`/`imapclient` para email, e envio de notificações push pelo serviço ntfy.sh [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
+- **Cap. 21 – Gráficos e imagens:** Pillow (PIL) para manipular imagens, e criação de gráficos com Matplotlib (novidade da 3ª edição), além de `pyperclipimg` para copiar/colar imagens na área de transferência [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
+- **Cap. 22 – OCR (reconhecimento de texto em imagens):** PyTesseract para extrair texto de imagens [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
+- **Cap. 23 – Controle de teclado e mouse:** PyAutoGUI (também criado pelo autor) e PyScreeze
+- **Cap. 24 – Texto-para-fala e reconhecimento de voz:** as bibliotecas pyttsx3 e gTTS para text-to-speech, e o Whisper da OpenAI para transcrição de áudio/vídeo [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)

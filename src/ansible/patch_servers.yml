@@ -1,0 +1,93 @@
+---
+# patch_servers.yml
+#
+# Playbook de manutenção: atualiza pacotes do sistema operacional,
+# reinicia se necessário e verifica se o serviço voltou a responder
+# antes de seguir para o próximo servidor (rolling update).
+#
+# Isso evita o cenário clássico de "atualizei tudo ao mesmo tempo
+# e derrubei o cluster inteiro".
+#
+# Uso:
+#   ansible-playbook -i inventory/hosts.ini patch_servers.yml --limit webservers
+#
+# Para testar sem aplicar de verdade:
+#   ansible-playbook -i inventory/hosts.ini patch_servers.yml --check --diff
+
+- name: Atualizar pacotes do sistema com segurança (rolling)
+  hosts: webservers
+  become: true
+  serial: 1          # processa um host por vez
+  max_fail_percentage: 0   # se um host falhar, para a execução nos demais
+
+  vars:
+    health_check_url: "http://localhost:8080/health"
+    health_check_retries: 10
+    health_check_delay: 5
+
+  pre_tasks:
+    - name: Remover o servidor do load balancer (placeholder)
+      ansible.builtin.debug:
+        msg: "Aqui entraria a chamada real para tirar '{{ inventory_hostname }}' do LB"
+      # Em produção real: módulo do seu LB (ex: community.general.haproxy,
+      # ou chamada de API do seu load balancer/cloud provider)
+
+  tasks:
+    - name: Atualizar cache de pacotes (Debian/Ubuntu)
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Aplicar upgrade de pacotes (Debian/Ubuntu)
+      ansible.builtin.apt:
+        upgrade: dist
+        autoremove: true
+      register: apt_upgrade_result
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Aplicar upgrade de pacotes (RedHat/CentOS)
+      ansible.builtin.yum:
+        name: "*"
+        state: latest
+        update_cache: true
+      register: yum_upgrade_result
+      when: ansible_facts['os_family'] == "RedHat"
+
+    - name: Verificar se é necessário reiniciar (Debian/Ubuntu)
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Reiniciar o servidor, se necessário
+      ansible.builtin.reboot:
+        reboot_timeout: 300
+        msg: "Reboot solicitado pelo Ansible após atualização de pacotes"
+      when:
+        - ansible_facts['os_family'] == "Debian"
+        - reboot_required_file.stat.exists
+
+    - name: Garantir que o serviço da aplicação está ativo
+      ansible.builtin.systemd:
+        name: minha-aplicacao
+        state: started
+        enabled: true
+
+    - name: Aguardar o serviço responder no health check
+      ansible.builtin.uri:
+        url: "{{ health_check_url }}"
+        status_code: 200
+      register: health_result
+      retries: "{{ health_check_retries }}"
+      delay: "{{ health_check_delay }}"
+      until: health_result.status == 200
+
+  post_tasks:
+    - name: Recolocar o servidor no load balancer (placeholder)
+      ansible.builtin.debug:
+        msg: "Aqui entraria a chamada real para devolver '{{ inventory_hostname }}' ao LB"
+
+    - name: Log de conclusão
+      ansible.builtin.debug:
+        msg: "✅ {{ inventory_hostname }} atualizado e saudável."
