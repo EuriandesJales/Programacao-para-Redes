@@ -1,18 +1,16 @@
 
 # Glossário: Git, Estrutura de Pastas e Padrões de Branch
 
-Referência prática dividida em três partes: (1) comandos e operações do Git, (2) estruturas de pastas comuns para projetos, e (3) convenções de nomes de branch.
 
----
 
-# PARTE 1 — Operações Git
+# Operações Git
 
 ## 2. Configuração inicial
 
 ```bash
-git config --global user.name "Seu Nome"
-git config --global user.email "seu@email.com"
-git config --global init.defaultBranch main
+git config --global user.name "Seu Nome" #config user name
+git config --global user.email "seu@email.com" #config email user
+git config --global init.defaultBranch main # branch padrão
 ```
 
 ---
@@ -171,7 +169,7 @@ git push origin --tags                 # envia todas as tags
 
 ## 13. .gitignore
 
-Arquivo que lista o que o Git deve ignorar (não versionar):
+Arquivo que lista o que o Git deve ignorar (não versionar nem subir para nuvem):
 
 ```
 # dependências
@@ -195,7 +193,7 @@ build/
 
 ---
 
-# PARTE 2 — Padrões de Estrutura de Pastas
+## PARTE 2 — Padrões de Estrutura de Pastas
 
 ## Estrutura genérica (a maioria das linguagens)
 
@@ -298,7 +296,7 @@ monorepo/
 
 ---
 
-# PARTE 3 — Padrões de Nomes de Branch
+## PARTE 3 — Padrões de Nomes de Branch
 
 ## Convenção mais usada: `tipo/descricao-curta`
 
@@ -384,13 +382,13 @@ Este glossário conecta conceitos de lógica de programação (que você já dom
 **Lógica:** um espaço nomeado que guarda um valor.
 
 ```bash
-nome="João"          # sem espaços ao redor do =
+nome="João"          # atribuição de valor  
 idade=30
 echo "$nome tem $idade anos"
 ```
 
 - Não existe tipagem declarada (tudo é string por padrão, mas números são tratados como tais em contextos aritméticos).
-- Para usar o valor, prefixe com `$`: `$nome` ou `${nome}` (a segunda forma evita ambiguidade quando colado a outro texto: `${nome}s`).
+- Para usar o valor, prefixe com `$`: `$nome` ou `${nome}` (a segunda forma evita =ambiguidade quando colado a outro texto: `${nome}s`).
 - Variáveis de ambiente (globais do sistema): `$HOME`, `$PATH`, `$USER`.
 
 ---
@@ -433,17 +431,17 @@ Pontos-chave:
 
 ### Operadores de comparação
 
-|Lógica|Números (`[ ]`)|Strings (`[[ ]]`)|
-|---|---|---|
-|igual|`-eq`|`==`|
-|diferente|`-ne`|`!=`|
-|maior|`-gt`|`>` (dentro de `[[ ]]`)|
-|menor|`-lt`|`<`|
-|maior/igual|`-ge`|—|
-|menor/igual|`-le`|—|
-|E lógico|`&&`|`&&`|
-|OU lógico|`\|`|`\|`|
-|NÃO lógico|`!`|`!`|
+| Lógica      | Números (`[ ]`) | Strings (`[[ ]]`)       |
+| ----------- | --------------- | ----------------------- |
+| igual       | `-eq`           | `==`                    |
+| diferente   | `-ne`           | `!=`                    |
+| maior       | `-gt`           | `>` (dentro de `[[ ]]`) |
+| menor       | `-lt`           | `<`                     |
+| maior/igual | `-ge`           | —                       |
+| menor/igual | `-le`           | —                       |
+| E lógico    | `&&`            | `&&`                    |
+| OU lógico   | `\|`            | `\|`                    |
+| NÃO lógico  | `!`             | `!`                     |
 
 ### Testes de arquivo (muito usados em scripts)
 
@@ -764,8 +762,7 @@ wait                 # espera todos os processos em background terminarem
 |Comentário|`# isso é um comentário`|
 
 ---
-# Python
-# Glossário: Lógica de Programação → Python
+# Python Glossário: Lógica de Programação
 
 Mesma ideia do glossário de Bash: um "dicionário de tradução" entre lógica de programação e a sintaxe do Python. Boa notícia — Python é a linguagem que mais se parece com pseudocódigo, então essa tradução costuma ser bem direta.
 
@@ -1182,33 +1179,223 @@ asyncio.run(tarefa())
 |Bloco de código|indentação (sem chaves)|
 
 ---
-# Principais Framework para automação de Redes
+# Principais bibliotecas para automação de Redes com python
 
 
-- **Cap. 11-12 (Arquivos / CLI):** módulos padrão `os`, `shutil`, `send2trash`, `argparse`
-- **Cap. 13 – Web Scraping:** Requests, Beautiful Soup, Selenium e Playwright — os dois primeiros para baixar e interpretar páginas estáticas, e os dois últimos para controlar um navegador de verdade quando o conteúdo depende de JavaScript. [inventwithpython](https://inventwithpython.com/automate3workbook/chapter13.html)
-- **Cap. 14 – Planilhas Excel:** OpenPyXL (a própria página do autor confirma que a cobertura de terceiros foi atualizada para a versão mais recente disponível, incluindo o OpenPyXL) [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
-- **Cap. 15 – Google Sheets:** o pacote de terceiros EZSheets, que abstrai a API oficial do Google Sheets (criado pelo próprio autor do livro) [automatetheboringstuff](https://automatetheboringstuff.com/3e/chapter15.html)
-- **Cap. 16 – SQLite:** o módulo sqlite3 do Python, com uma introdução completa a bancos de dados relacionais [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
-- **Cap. 17 – PDF e Word:** operações de PDF atualizadas usando PyPDF e PDFMiner, além de `python-docx` para arquivos do Word [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
-- **Cap. 18 – CSV/JSON/XML:** módulos padrão `csv`, `json` e `xml`
-- **Cap. 19 – Tempo e agendamento:** módulos padrão `time`, `datetime`, `sched`
-- **Cap. 20 – Email e notificações:** `smtplib`/`imapclient` para email, e envio de notificações push pelo serviço ntfy.sh [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
-- **Cap. 21 – Gráficos e imagens:** Pillow (PIL) para manipular imagens, e criação de gráficos com Matplotlib (novidade da 3ª edição), além de `pyperclipimg` para copiar/colar imagens na área de transferência [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
-- **Cap. 22 – OCR (reconhecimento de texto em imagens):** PyTesseract para extrair texto de imagens [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
-- **Cap. 23 – Controle de teclado e mouse:** PyAutoGUI (também criado pelo autor) e PyScreeze
-- **Cap. 24 – Texto-para-fala e reconhecimento de voz:** as bibliotecas pyttsx3 e gTTS para text-to-speech, e o Whisper da OpenAI para transcrição de áudio/vídeo [inventwithpython](https://inventwithpython.com/blog/whats-new-in-the-3rd-edition-of-automate-the-boring-stuff-with-python.html)
+## Automate the Boring Stuff (3ª ed.) — Bibliotecas por capítulo com foco em DevOps
 
+Segue um resumo prático de cada biblioteca, sempre puxando para cenários de automação de infraestrutura, pipelines e operações.
 
-# Ansible
+### Cap. 11-12 — Arquivos e CLI: `os`, `shutil`, `send2trash`, `argparse`
+
+Base de qualquer script de automação: manipular caminhos, copiar/mover/apagar arquivos e construir interfaces de linha de comando.
+
+python
+
+```python
+import os, shutil, argparse
+
+parser = argparse.ArgumentParser(description="Rotaciona logs antigos")
+parser.add_argument("--dias", type=int, default=7)
+args = parser.parse_args()
+
+for raiz, _, arquivos in os.walk("/var/log/app"):
+    for f in arquivos:
+        caminho = os.path.join(raiz, f)
+        if os.path.getmtime(caminho) < time.time() - args.dias * 86400:
+            shutil.move(caminho, "/var/log/app/archive/")
+```
+
+**DevOps:** scripts de limpeza de logs, rotação de artefatos de build, organização de diretórios de deploy. `argparse` é a base de qualquer ferramenta CLI interna (wrappers de `kubectl`, `terraform`, etc). `send2trash` evita `rm -rf` acidental em scripts que rodam em máquinas de desenvolvedores.
+
+### Cap. 13 — Web Scraping: Requests, Beautiful Soup, Selenium, Playwright
+
+Requests + BeautifulSoup baixam e interpretam HTML estático; Selenium/Playwright controlam um navegador real quando há JavaScript.
+
+python
+
+```python
+import requests
+from bs4 import BeautifulSoup
+
+r = requests.get("https://status.meuservico.com")
+soup = BeautifulSoup(r.text, "html.parser")
+status = soup.select_one(".status-indicator").text
+```
+
+**DevOps:** checagem de status pages de terceiros, scraping de changelogs/release notes para alertas de upgrade, testes de smoke em dashboards internos que exigem login/JS (Playwright é hoje preferido a Selenium por ser mais rápido e estável em CI). Também útil para validar que uma página de status/health-check está no ar após deploy.
+
+### Cap. 14 — Planilhas Excel: OpenPyXL
+
+Lê e escreve arquivos `.xlsx` sem precisar do Excel instalado.
+
+python
+
+```python
+from openpyxl import Workbook
+wb = Workbook()
+ws = wb.active
+ws.append(["Serviço", "Uptime %", "Incidentes"])
+ws.append(["API Gateway", 99.95, 2])
+wb.save("relatorio_sla.xlsx")
+```
+
+**DevOps:** geração automática de relatórios de SLA/uptime para stakeholders não técnicos, exportar métricas do Prometheus/Grafana para planilhas de auditoria.
+
+### Cap. 15 — Google Sheets: EZSheets
+
+Abstrai a API do Google Sheets sem exigir lidar diretamente com OAuth de forma manual.
+
+python
+
+```python
+import ezsheets
+ss = ezsheets.Spreadsheet('id_da_planilha')
+sheet = ss[0]
+sheet.appendRow(['2026-09-23', 'deploy-prod', 'sucesso'])
+```
+
+**DevOps:** dashboards colaborativos de deploys/incidentes, registro de mudanças (change log) compartilhado com o time sem precisar de um sistema dedicado.
+
+### Cap. 16 — SQLite: `sqlite3`
+
+Banco relacional embutido, zero configuração de servidor.
+
+python
+
+```python
+import sqlite3
+conn = sqlite3.connect("metrics.db")
+conn.execute("CREATE TABLE IF NOT EXISTS deploys (ts TEXT, servico TEXT, status TEXT)")
+conn.execute("INSERT INTO deploys VALUES (?, ?, ?)", ("2026-09-23", "auth-svc", "ok"))
+conn.commit()
+```
+
+**DevOps:** cache local de estado em scripts de automação (ex.: quais hosts já foram atualizados), histórico leve de execuções de jobs sem precisar subir Postgres/MySQL, ótimo para ferramentas CLI internas que precisam de persistência simples.
+
+### Cap. 17 — PDF e Word: PyPDF, PDFMiner, python-docx
+
+Extração/manipulação de PDFs e geração de documentos Word.
+
+python
+
+```python
+from pypdf import PdfReader
+texto = "".join(p.extract_text() for p in PdfReader("laudo.pdf").pages)
+```
+
+**DevOps:** extrair dados de relatórios de auditoria/compliance em PDF, gerar automaticamente documentação de runbooks ou postmortems em Word a partir de templates.
+
+### Cap. 18 — CSV/JSON/XML: `csv`, `json`, `xml`
+
+Formatos onipresentes em configuração e troca de dados.
+
+python
+
+```python
+import json
+with open("inventario.json") as f:
+    hosts = json.load(f)
+for h in hosts:
+    print(h["nome"], h["ip"])
+```
+
+**DevOps:** parsing de manifests Kubernetes exportados como JSON, leitura de inventários do Ansible, processamento de exports de métricas em CSV, transformação de configs XML legados (ex.: Jenkins, Maven).
+
+### Cap. 19 — Tempo e agendamento: `time`, `datetime`, `sched`
+
+Controle de tempo, timestamps e agendamento simples de tarefas dentro do próprio processo Python (sem cron externo).
+
+python
+
+```python
+import sched, time
+s = sched.scheduler(time.time, time.sleep)
+def healthcheck():
+    print("checando serviços...")
+    s.enter(300, 1, healthcheck)
+s.enter(0, 1, healthcheck)
+s.run()
+```
+
+**DevOps:** scripts de monitoramento em loop, cálculo de janelas de manutenção, geração de timestamps padronizados (UTC) para logs.
+
+### Cap. 20 — Email e notificações: `smtplib`, `imapclient`, ntfy.sh
+
+Envio/leitura de email e push notifications simples via HTTP (ntfy.sh não exige app nem conta).
+
+python
+
+```python
+import requests
+requests.post("https://ntfy.sh/meu-canal-alertas", data="Deploy falhou em prod!".encode())
+```
+
+**DevOps:** alertas de pipeline (build quebrado, deploy falho, certificado expirando) direto no celular via ntfy, sem precisar integrar Slack/PagerDuty para scripts simples; `smtplib` para relatórios automáticos por email.
+
+### Cap. 21 — Gráficos e imagens: Pillow, Matplotlib, pyperclipimg
+
+Manipulação de imagens e geração de gráficos.
+
+python
+
+```python
+import matplotlib.pyplot as plt
+plt.plot(dias, uso_cpu)
+plt.title("Uso de CPU - últimos 30 dias")
+plt.savefig("cpu_report.png")
+```
+
+**DevOps:** gerar gráficos de métricas (CPU, latência, custo de cloud) para relatórios automatizados, redimensionar/anotar screenshots de dashboards para documentação de incidentes.
+
+### Cap. 22 — OCR: PyTesseract
+
+Extrai texto de imagens.
+
+python
+
+```python
+import pytesseract
+from PIL import Image
+texto = pytesseract.image_to_string(Image.open("screenshot_erro.png"))
+```
+
+**DevOps:** extrair mensagens de erro de screenshots enviados por usuários/suporte, processar logs que só existem como imagem (ex.: consoles legados, VMs sem acesso a texto).
+
+### Cap. 23 — Controle de teclado e mouse: PyAutoGUI, PyScreeze
+
+Automação de GUI — clicar, digitar, reconhecer elementos na tela.
+
+python
+
+```python
+import pyautogui
+pyautogui.click(pyautogui.locateCenterOnScreen("botao_deploy.png"))
+```
+
+**DevOps:** automatizar interações com ferramentas legadas sem API (consoles de VMware, sistemas internos antigos), últimos casos onde não há alternativa via CLI/API — usar com cautela, é frágil e deve ser último recurso.
+
+### Cap. 24 — Texto-para-fala e voz: pyttsx3, gTTS, Whisper
+
+Síntese de voz e transcrição de áudio.
+
+python
+
+```python
+import pyttsx3
+engine = pyttsx3.init()
+engine.say("Alerta: disco cheio no servidor de produção")
+engine.runAndWait()
+```
+
+**DevOps:** alertas sonoros em salas de operação (NOC), transcrição automática (Whisper) de reuniões de postmortem/incident review para gerar atas e buscar termos-chave depois.
+# Glossário: Ansible para DevOps
 
 é uma ferramenta que faz abstração de SO, ela permite que você escreva qual é o estado final que as maquinas da rede devem estra, e ela vai fazer os passos necessarios para chegar a o estado indicado.
 
 ela opera por conexão ssh fazendo uso de chaves publicas compartilhadas com o computador administrador que deve ter a privada, para fazer ssh sem autenticação por senha facilitando a automação de processos, originalmente pensada em desenvolvimento no linux, mas com algumas modificações no sistema windowns consegue operar também neste sistema.
 
 o controle opera via acervo de hostnames e mac address que torna possivel fazer conexão ssh alguns, seu arquivo de oconfiguração usa ymal, vamos ver um pouco da sintaxe de código desta ferramenta.
-
-# Glossário: Ansible para DevOps
 
 Referência prática das principais operações do Ansible — da estrutura básica aos comandos do dia a dia de um administrador/DevOps.
 
@@ -1242,6 +1429,7 @@ pip install ansible                # instalação via pip
 # ou
 sudo apt install ansible           # Debian/Ubuntu
 sudo dnf install ansible           # RHEL/Fedora
+sudo pacman -S ansible  # Arch 
 
 ansible --version                  # verificar versão e localizar arquivos de config
 ```
